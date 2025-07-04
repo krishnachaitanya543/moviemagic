@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MovieMagic | Payment</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #0f1014;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .form-container {
+      background: #1c1c1e;
+      padding: 40px 60px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(248, 68, 100, 0.6);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    h2 {
+      color: #f84464;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .method-tabs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      gap: 10px;
+    }
+
+    .method-btn {
+      flex: 1;
+      padding: 10px;
+      background: #2a2a2e;
+      border: none;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .method-btn.active {
+      background: #f84464;
+      color: #fff;
+      box-shadow: 0 0 10px #f84464;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    label {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 4px;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: #2a2a2e;
+      color: #fff;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      background: #333;
+      box-shadow: 0 0 8px #f84464;
+    }
+
+    button[type="submit"] {
+      margin-top: 10px;
+      padding: 14px;
+      border: none;
+      border-radius: 30px;
+      background: #f84464;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background: #fff;
+      color: #f84464;
+    }
+
+    .payment-section {
+      display: none;
+    }
+
+    .payment-section.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>💳 Payment Details</h2>
+
+    <!-- Payment Method Tabs -->
+    <div class="method-tabs">
+      <button class="method-btn active" onclick="switchMethod('card')">Card</button>
+      <button class="method-btn" onclick="switchMethod('upi')">UPI</button>
+      <button class="method-btn" onclick="switchMethod('wallet')">Wallet</button>
+      <button class="method-btn" onclick="switchMethod('netbanking')">NetBanking</button>
+    </div>
+
+    <!-- Payment Form -->
+    <form method="POST">
+
+      <!-- Card Section -->
+      <div id="card" class="payment-section active">
+        <label>Cardholder Name</label>
+        <input type="text" name="cardholder" placeholder="e.g. John Doe">
+
+        <label>Card Number</label>
+        <input type="text" name="cardnumber" placeholder="1234 5678 9012 3456" maxlength="19">
+
+        <label>Expiry (MM/YY)</label>
+        <input type="text" name="expiry" placeholder="MM/YY" maxlength="5">
+
+        <label>CVV</label>
+        <input type="text" name="cvv" placeholder="123" maxlength="3">
+      </div>
+
+      <!-- UPI Section -->
+      <div id="upi" class="payment-section">
+        <label>Enter UPI ID</label>
+        <input type="text" name="upi" placeholder="example@upi">
+      </div>
+
+      <!-- Wallet Section -->
+      <div id="wallet" class="payment-section">
+        <label>Select Wallet</label>
+        <input type="text" name="wallet" placeholder="e.g. Paytm / PhonePe">
+        <label>Mobile Number</label>
+        <input type="text" name="wallet_number" placeholder="Enter registered mobile">
+      </div>
+
+      <!-- Net Banking -->
+      <div id="netbanking" class="payment-section">
+        <label>Bank Name</label>
+        <input type="text" name="bank" placeholder="e.g. HDFC, SBI">
+        <label>Account Username</label>
+        <input type="text" name="bank_user" placeholder="Enter username">
+      </div>
+
+      <button type="submit">Pay & Confirm</button>
+    </form>
+  </div>
+
+  <script>
+    function switchMethod(method) {
+      document.querySelectorAll('.method-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.payment-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelector(`[onclick*="${method}"]`).classList.add('active');
+      document.getElementById(method).classList.add('active');
+    }
+  </script>
+</body>
+</html>

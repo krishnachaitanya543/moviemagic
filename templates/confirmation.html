@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Booking Confirmed | MovieMagic</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f1014;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .card {
+      max-width: 500px;
+      margin: auto;
+      padding: 30px;
+      background: #1c1c1e;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(248, 68, 100, 0.5);
+    }
+    h2 {
+      color: #f84464;
+      margin-bottom: 20px;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: #f84464;
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: white;
+      color: #f84464;
+    }
+    .details p {
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+<script>
+  confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+</script>
+
+<div class="card">
+  <h2>🎉 Your Ticket is Booked!</h2>
+  {% if booking %}
+  <div class="details">
+    <p><strong>Movie:</strong> {{ booking.movie }}</p>
+    <p><strong>Seats:</strong> {{ booking.seat | join(', ') }}</p>
+    <p><strong>Date:</strong> {{ booking.date }}</p>
+    <p><strong>Time:</strong> {{ booking.time }}</p>
+    <p><strong>Booking ID:</strong> {{ booking.id }}</p>
+  </div>
+  {% endif %}
+  <a href="{{ url_for('home') }}" class="btn">🎬 Back to Home</a>
+</div>
+</body>
+</html>

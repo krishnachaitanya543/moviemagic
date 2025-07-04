@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login | MovieMagic</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f1014;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background: #1c1c1e;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 0 20px rgba(248, 68, 100, 0.6);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            background: #2c2c2e;
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #f84464;
+            border: none;
+            color: white;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: white;
+            color: #f84464;
+        }
+
+        .social-login {
+            margin: 15px 0;
+        }
+
+        .social-btn {
+            width: 48%;
+            padding: 10px;
+            border-radius: 30px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .google { background: #DB4437; }
+        .facebook { background: #4267B2; }
+
+        .social-btn:hover {
+            opacity: 0.85;
+        }
+
+        .toggle-password {
+            float: right;
+            font-size: 0.8em;
+            cursor: pointer;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>Welcome Back 🎟</h2>
+    <form method="POST">
+        <input type="email" name="email" placeholder="Email" pattern="[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+" required>
+
+        <div style="position: relative;">
+            <input type="password" name="password" placeholder="Password" id="login-password" required>
+            <span class="toggle-password" onclick="togglePassword('login-password')">Show</span>
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div class="social-login">
+        <button class="social-btn google">Login with Google</button>
+        <button class="social-btn facebook">Login with Facebook</button>
+    </div>
+
+    <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+</div>
+
+<script>
+    function togglePassword(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+</script>
+</body>
+</html>

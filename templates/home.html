@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MovieMagic | Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f1014;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #1c1c1c;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      color: #f84464;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    #location-select {
+      padding: 0.4rem 0.6rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      background-color: #2a2a2a;
+      color: white;
+      border: none;
+    }
+
+    .btn-header {
+      background: #f84464;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .hero {
+      background: url('{{ url_for('static', filename='images/hero-bg.jpg') }}') no-repeat center center/cover;
+      padding: 100px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .genre-filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 40px 0 20px;
+    }
+
+    .genre-chip {
+      background: #2a2a2a;
+      color: #fff;
+      padding: 8px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .genre-chip:hover,
+    .genre-chip.active {
+      background-color: #f84464;
+    }
+
+    .section {
+      padding: 50px 5%;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .section h3 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #f84464;
+    }
+
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 30px;
+    }
+
+    .movie-card {
+      background: #1c1c1c;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s;
+    }
+
+    .movie-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .movie-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+
+    .movie-info {
+      padding: 15px;
+      text-align: center;
+    }
+
+    .movie-info h4 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    .genre-badge {
+      display: inline-block;
+      padding: 5px 12px;
+      background: #f84464;
+      color: #fff;
+      border-radius: 12px;
+      font-size: 0.75rem;
+    }
+
+    .btn-book {
+      margin-top: 12px;
+      display: inline-block;
+      background: #f84464;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .btn-book[disabled] {
+      background-color: #555;
+      cursor: not-allowed;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #1c1c1c;
+      color: #bbb;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>MovieMagic</h1>
+    <div class="header-right">
+      <select id="location-select">
+        <option value="hyderabad">Hyderabad</option>
+        <option value="bengaluru">Bengaluru</option>
+        <option value="chennai">Chennai</option>
+        <option value="mumbai">Mumbai</option>
+        <option value="delhi">Delhi</option>
+      </select>
+      <a href="{{ url_for('logout') }}" class="btn-header">Logout</a>
+    </div>
+  </header>
+
+  <section class="hero"></section>
+
+  <section class="section" style="text-align: center; padding-top: 40px; padding-bottom: 10px;">
+    <h2 style="font-size: 2.5rem; color: #fff;">Experience Movies Like Never Before</h2>
+    <p style="font-size: 1.2rem; color: #ccc;">Explore the latest releases and upcoming blockbusters</p>
+  </section>
+
+  <div class="genre-filters">
+    <span class="genre-chip active" data-genre="All">All</span>
+    <span class="genre-chip" data-genre="Action">Action</span>
+    <span class="genre-chip" data-genre="Comedy">Comedy</span>
+    <span class="genre-chip" data-genre="Drama">Drama</span>
+    <span class="genre-chip" data-genre="Horror">Horror</span>
+    <span class="genre-chip" data-genre="Romance">Romance</span>
+  </div>
+
+  <section class="section">
+    <h3>Now Showing</h3>
+    <div class="movie-grid" id="movie-grid">
+  <div class="movie-card" data-genre="Action">
+    <img src="{{ url_for('static', filename='posters/salaar.jpg') }}" alt="Salaar" />
+    <div class="movie-info">
+      <h4>Salaar</h4>
+      <span class="genre-badge">Action</span><br />
+      <a href="{{ url_for('booking') }}" class="btn-book">Book Now</a>
+    </div>
+  </div>
+
+  <div class="movie-card" data-genre="Comedy">
+    <img src="{{ url_for('static', filename='posters/mad.jpg') }}" alt="Mad" />
+    <div class="movie-info">
+      <h4>Mad</h4>
+      <span class="genre-badge">Comedy</span><br />
+      <a href="{{ url_for('booking') }}" class="btn-book">Book Now</a>
+    </div>
+  </div>
+
+  <div class="movie-card" data-genre="Drama">
+    <img src="{{ url_for('static', filename='posters/jersey.jpeg') }}" alt="Jersey" />
+    <div class="movie-info">
+      <h4>Jersey</h4>
+      <span class="genre-badge">Drama</span><br />
+      <a href="{{ url_for('booking') }}" class="btn-book">Book Now</a>
+    </div>
+  </div>
+
+  <div class="movie-card" data-genre="Horror">
+    <img src="{{ url_for('static', filename='posters/virupaksha.jpg') }}" alt="Virupaksha" />
+    <div class="movie-info">
+      <h4>Virupaksha</h4>
+      <span class="genre-badge">Horror</span><br />
+      <a href="{{ url_for('booking') }}" class="btn-book">Book Now</a>
+    </div>
+  </div>
+
+  <div class="movie-card" data-genre="Romance">
+    <img src="{{ url_for('static', filename='posters/arjun_reddy.jpg') }}" alt="Arjun_Reddy" />
+    <div class="movie-info">
+      <h4>Arjun Reddy</h4>
+      <span class="genre-badge">Romance</span><br />
+      <a href="{{ url_for('booking') }}" class="btn-book">Book Now</a>
+    </div>
+  </div>
+
+  <div class="movie-card" data-genre="Action">
+    <img src="{{ url_for('static', filename='posters/rrr.jpg') }}" alt="RRR" />
+    <div class="movie-info">
+      <h4>RRR</h4>
+      <span class="genre-badge">Action</span><br />
+      <a href="{{ url_for('booking') }}" class="btn-book">Book Now</a>
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+  </section>
+
+<section class="section">
+  <h3>Top Rated & Trending</h3>
+  <div class="movie-grid">
+    <div class="movie-card">
+      <img src="{{ url_for('static', filename='posters/pushpa.jpg') }}" alt="Pushpa" />
+      <div class="movie-info">
+        <h4>Pushpa</h4>
+        <span class="genre-badge">Action</span><br />
+        <span style="color:#ccc; font-size:0.85rem;">⭐ 8.3 | 2h 59m</span><br />
+        <a href="{{ url_for('booking') }}" class="btn-book">Book Now</a>
+      </div>
+    </div>
+    <div class="movie-card">
+      <img src="{{ url_for('static', filename='posters/hi-nanna.jpg') }}" alt="Hi Nanna" />
+      <div class="movie-info">
+        <h4>Hi Nanna</h4>
+        <span class="genre-badge">Romance</span><br />
+        <span style="color:#ccc; font-size:0.85rem;">⭐ 7.9 | 2h 35m</span><br />
+        <a href="{{ url_for('booking') }}" class="btn-book">Book Now</a>
+      </div>
+    </div>
+    <div class="movie-card">
+      <img src="{{ url_for('static', filename='posters/kubera.jpg') }}" alt="Kubera" />
+      <div class="movie-info">
+        <h4>kubera</h4>
+        <span class="genre-badge">Drama</span><br />
+        <span style="color:#ccc; font-size:0.85rem;">⭐ 8.1 | 2h 42m</span><br />
+        <a href="{{ url_for('booking') }}" class="btn-book">Book Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h3>Coming Soon</h3>
+    <div class="movie-grid">
+      <div class="movie-card">
+        <img src="{{ url_for('static', filename='posters/Spirit.jpg') }}" alt="Spirit" />
+        <div class="movie-info">
+          <h4>Spirit</h4>
+          <span class="genre-badge">Sci-Fi</span><br />
+          <span class="btn-book" style="opacity: 0.5; cursor: not-allowed">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 MovieMagic. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const genreChips = document.querySelectorAll('.genre-chip');
+    const movieCards = document.querySelectorAll('.movie-card');
+
+    genreChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelector('.genre-chip.active').classList.remove('active');
+        chip.classList.add('active');
+        const selected = chip.dataset.genre;
+
+        movieCards.forEach(card => {
+          const cardGenre = card.dataset.genre;
+          if (selected === 'All' || cardGenre === selected) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
