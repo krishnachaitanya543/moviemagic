@@ -15,7 +15,7 @@ dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 users_table = dynamodb.Table("MovieMagic_Users")
 bookings_table = dynamodb.Table("MovieMagic_Bookings")
 sns = boto3.client('sns', region_name='us-east-1')
-sns_topic_arn = 'arn:aws:sns:us-east-1:605134439175:MovieMagicNotifications:259e3be3-5864-4985-ab9d-edfc09ca6300'  # Replace with real ARN
+sns_topic_arn = 'arn:aws:sns:us-east-1:715841344567:MovieTicketNotifications:34b0455f-7285-4d62-b2c0-43c610e1a9cd'  # Replace with real ARN
 
 # -------- Helper Functions --------
 def hash_password(password):
